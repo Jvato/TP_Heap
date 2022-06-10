@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 int wrapper_strcmp(const void* x, const void* y){
@@ -117,12 +118,12 @@ static void prueba_heap_elementos_dinamicos()
 
     heap_t* heap = heap_crear(wrapper_strcmp);
     
-    char* elem1 = malloc(sizeof(char*));
-    char* elem2 = malloc(sizeof(char*));
-    char* elem3 = malloc(sizeof(char*));
-    elem1 = "n";
-    elem2 = "a";
-    elem3 = "e";
+    char* elem1 = malloc(sizeof(char)*2);
+    char* elem2 = malloc(sizeof(char)*2);
+    char* elem3 = malloc(sizeof(char)*2);
+    strcpy(elem1,"n");
+    strcpy(elem2,"a");
+    strcpy(elem3,"e");
 
     print_test("Encolar elem1 es valido", heap_encolar(heap, elem1) == true);
     print_test("Encolar elem2 es valido", heap_encolar(heap, elem2) == true);
@@ -131,7 +132,7 @@ static void prueba_heap_elementos_dinamicos()
     print_test("Ver el maximo devuelve n", strcmp(heap_ver_max(heap),"n") == 0);
     print_test("Desencolar en el heap devuelve n", strcmp(heap_desencolar(heap),"n") == 0);
     print_test("Heap tiene 2 elementos", heap_cantidad(heap) == 2);
-
+    free(elem1);
     heap_destruir(heap, free); 
 }
 
@@ -210,17 +211,17 @@ static void prueba_heap_sort()
     
     mezclar(arr, largo);
     
-    for (size_t i = 0; i < largo-1; i++){
+    for (size_t i = 0; i < largo; i++){
         printf("%i\n", *(int*)arr[i]);
     }
     heap_sort(arr, largo, comparar);
     printf("Luego de heap sort\n");
-    for (size_t i = 0; i < largo-1; i++){
+    for (size_t i = 0; i < largo; i++){
         printf("%i\n", *(int*)arr[i]);
     }
     
     bool ok = true;
-    for (size_t i = 0; i < largo-1; i++){
+    for (size_t i = 0; i < largo - 1; i++){
         if(arr[i] > arr[i+1]){
             ok = false;
             break;
